@@ -53,22 +53,42 @@ namespace Assignment2_DIS_Spring2021
             //Question 7
             Console.WriteLine("Question 7");
             int[,] scores = { { 1, 91 }, { 1, 92 }, { 2, 93 }, { 2, 97 }, { 1, 60 }, { 2, 77 }, { 1, 65 }, { 1, 87 }, { 1, 100 }, { 2, 100 }, { 2, 76 } };
+            HighFive(scores);
             Console.WriteLine();
 
             //Question 8
             Console.WriteLine("Question 8");
+            int n8 = 19;
+            if(HappyNumber(n8))
+            {
+                Console.WriteLine("{0} is a happy number",n8);
+            }
+            else
+            {
+                Console.WriteLine("{0} is not a happy number", n8);
+            }
+
             Console.WriteLine();
 
             //Question 9
             Console.WriteLine("Question 9");
+            int[] ar9 = { 7, 1, 5, 3, 6, 4 };
+            int profit = Stocks(ar9);
+            if(profit == 0)
+            {
+                Console.WriteLine("No Profit is possible");
+            }
+            else
+            {
+                Console.WriteLine("Profit is {0}",profit);
+            }
             Console.WriteLine();
 
             //Question 10
             Console.WriteLine("Question 10");
+            int n10 = 3;
+            Stairs(n10);
             Console.WriteLine();
-
-
-
         }
 
         //Question 1
