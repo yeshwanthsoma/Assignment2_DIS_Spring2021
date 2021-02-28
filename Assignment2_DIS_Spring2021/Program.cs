@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment2_DIS_Spring2021
 {
@@ -7,6 +9,7 @@ namespace Assignment2_DIS_Spring2021
         static void Main(string[] args)
         {
             //Question1:
+            Console.WriteLine("Question 1");
             int[] ar1 = { 2, 5, 1, 3, 4, 7 };
             int n1 = 3;
             ShuffleArray(ar1, n1);
@@ -34,6 +37,7 @@ namespace Assignment2_DIS_Spring2021
             Console.WriteLine("Question 5");
             string s5 = "korfsucy";
             int[] indices = { 6, 4, 3, 2, 1, 0, 5, 7 };
+            RestoreString(s5, indices);
             Console.WriteLine();
 
             //Question 6
@@ -111,12 +115,16 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
-                
+                for (int i = 0, j = n; i <= n-1 && j <= 2*n-1; i++, j++)
+                {
+                    Console.Write(nums[i]+","+nums[j]+",");
+                }
+                Console.WriteLine();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -132,14 +140,39 @@ namespace Assignment2_DIS_Spring2021
        
         private static void MoveZeroes(int[] ar2)
         {
+            int count = 0;
             try
             {
-                //write your code here.
-                
+                for(int i = 0; i < ar2.Length; i++)        //Counting no of zeros
+                {
+                    if (ar2[i] == 0)
+                    {
+                        count++;
+                    }
+                }
+
+                for(int i = 0,j=0; i < ar2.Length-count && j<ar2.Length; j++)       //bringing all the non-zeros togeather
+                {
+                    if (ar2[j] != 0)
+                    {
+                        ar2[i] = ar2[j];
+                        i++;
+                    }
+                }
+
+                for(int i = 0; i < ar2.Length; i++)                         //Adding zeroes at last
+                {
+                    if (i >= ar2.Length - 2)
+                    {
+                        ar2[i] = 0;
+                    }
+                    Console.Write(ar2[i] + " ");
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -162,13 +195,32 @@ namespace Assignment2_DIS_Spring2021
 
         private static void CoolPairs(int[] nums)
         {
+            int count = 0;
             try
             {
-                //write your code here.
+                Dictionary<int, int> dict = new Dictionary<int, int>();
+                for(int i = 0; i < nums.Length; i++)
+                {
+                    if (!dict.ContainsKey(nums[i]))             //adding new key-value if it is not exists
+                    {
+                        dict.Add(nums[i], 1);
+                    }
+                    else
+                    {
+                        count += dict[nums[i]];             //counting no of cool pairs
+                        dict[nums[i]] += 1;
+                    }
+                    
+                }
+
+                Console.WriteLine(count);
+                
+ 
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -194,12 +246,25 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
-                
+                Dictionary<int, int> dict = new Dictionary<int, int>();
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (!dict.ContainsValue(target-nums[i]))        //adding new other value if it is not exists
+                    {
+                        dict.Add(i, nums[i]);
+                    }
+                    else
+                    {
+                        int key=dict.FirstOrDefault(x=>x.Value == (target - nums[i])).Key;      //if other value exists print the pair
+                        Console.WriteLine(i + "," + key);
+                        break;
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);    //Print Error Message
                 throw;
             }
 
@@ -224,14 +289,25 @@ namespace Assignment2_DIS_Spring2021
         /// </summary>
         private static void RestoreString(string s, int[] indices)
         {
+            Dictionary<int, char> dict = new Dictionary<int, char>();
+            
             try
             {
-                //write your code here.
+               for(int i =0; i < s.Length; i++)     //Adding the key-value pairs 
+                {
+                    dict.Add(indices[i], s[i]);
+                }
+
+               for(int i = 0; i < s.Length; i++)    //Printing the key-value pairs
+                {
+                    Console.Write(dict[i]);
+                }
                 
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);  //Print Error Message
                 throw;
             }
         }
@@ -243,7 +319,7 @@ namespace Assignment2_DIS_Spring2021
         ///All occurrences of a character must be replaced with another character while preserving the order of characters.
         ///No two characters may map to the same character but a character may map to itself.
         ///Example 1:
-        ///Input:s1 = “bulls” s2 = “sunny” 
+        ///Input:s1 = “bulls” s2 = “sunny”
         ///Output : True
         ///Explanation: ‘b’ can be replaced with ‘s’ and similarly ‘u’ with ‘u’, ‘l’ with ‘n’ and ‘s’ with ‘y’.
         ///Example 2:
@@ -258,12 +334,43 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
-                return false;
+                if (s1.Length != s2.Length)     //if different lengths return false
+                {
+                    return false;
+                }
+                Dictionary<string, string> dict1 = new Dictionary<string, string>();
+                Dictionary<string, string> dict2 = new Dictionary<string, string>();
+
+                for(int i = 0; i < s1.Length; i++)      
+                {
+
+                    if (dict1.ContainsKey(s1[i].ToString()))                
+                    {
+                        if (!dict1[s1[i].ToString()].Equals(s2[i].ToString()))  //if the chars doesn't match return false
+                        {
+                            return false;
+                        }
+                    }
+
+                    else
+                    {
+                        if (dict2.ContainsKey(s2[i].ToString()))        //if it has different char return false
+                        {
+                            return false;
+                        }
+
+                        dict1.Add(s1[i].ToString(), s2[i].ToString());
+                        dict2.Add(s2[i].ToString(), "0");
+                    }
+
+                }
+
+                return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -293,12 +400,51 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
-                
+
+                Dictionary<int, List<int>> scores = new Dictionary<int, List<int>>();
+                for(int i = 0; i < items.Length/2; i++)
+                { 
+                    if (scores.ContainsKey(items[i, 0]))        
+                    {
+                        scores[items[i, 0]].Add(items[i, 1]);
+                        scores[items[i, 0]].Sort();
+                        scores[items[i, 0]].Reverse();          //sort them and reverse them
+                    }
+                    else
+                    {
+                        List<int> temp = new List<int>();       
+                        temp.Add(items[i, 1]);
+                        scores.Add(items[i, 0], temp);      //Adding all the key-value pairs
+                    }
+                }
+                Dictionary<int,int> results = new Dictionary<int,int>();
+                List<int> score = new List<int>();
+                foreach (var p in scores)
+                {
+                    int temp=0;
+                    for(int i = 0; i < 5; i++)
+                    {
+                        temp = temp + p.Value[i];       //Adding all the scores
+                    }
+                    temp = temp / 5;                    //Calculating the means
+                    results.Add(p.Key, temp);
+                    score.Add(temp);                //add thisnscore to dict
+                }
+                score.Sort();
+                Console.Write("[");
+                foreach (int q in score)
+                {
+                    Console.Write("["+ results.FirstOrDefault(x => x.Value == (q)).Key+","+q+"]");      //Printing all the dictionary values
+                }
+
+                Console.Write("]");
+
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -330,12 +476,38 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
+                if (n < 0)
+                {
+                    return false;
+                }
+                int num = n;
+                int result = n;
+
+                while (result > 9)          //for numbers greater than 9
+                {
+                    result = 0;
+                    while (num > 0)
+                    {
+                        int temp = num % 10;        
+                        result += temp*temp;        //Calculating the sum of squares of digits
+                        num /= 10;
+                    }
+                    num = result;
+
+                }
+
+
+                if(result == 1 || result == 7)      //if a number becomes single digit 1 or 7 then it is a happy number
+                {
+                    return true;
+                }
+
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -361,12 +533,20 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
-                return 0;
+                int maximumProfit = 0;          //maximum profit
+                int stock = prices[0];
+                for(int i = 0; i < prices.Length; i++)
+                {
+                    stock = Math.Min(stock, prices[i]);         //searching for the minimum buying value
+                    maximumProfit = Math.Max(maximumProfit, prices[i] - stock);     //searching for the maximum profit value
+
+                }
+                return maximumProfit;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
@@ -396,14 +576,41 @@ namespace Assignment2_DIS_Spring2021
         {
             try
             {
-                //write your code here.
+                int res=0;
+                if (steps == 0|| steps==1)          //if the steps are 0 or 1 return 0 or 1
+                {
+                    Console.WriteLine(steps);
+                }
+                else
+                {
+                    int a = 0, b = 1;
+                    
+                    for(int i = 0; i < steps; i++)      //Calculating the fibonacci series value
+                    {
+                        res = a + b;
+                        a = b;
+                        b = res;
+                    }
+                    Console.WriteLine(res);
+                }
               
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
+                Console.WriteLine(e.Message);   //Print Error Message
                 throw;
             }
         }
     }
 }
+
+/*    Self Reflection:
+ *    I have learnt a new appraoch for the Happy Number Problem 
+ *    Also got to know the IDE of visual studio and also the many features like Debugging.
+ *    I have learnt more in dealing with 2 dimentional arrays in HighFive Problem
+ *    I have taken around 5-5.5 hours to complete the whole assignment */
+
+
+
+
