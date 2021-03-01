@@ -13,12 +13,13 @@ namespace Assignment2_DIS_Spring2021
             int[] ar1 = { 2, 5, 1, 3, 4, 7 };
             int n1 = 3;
             ShuffleArray(ar1, n1);
+            Console.WriteLine();
 
             //Question 2 
             Console.WriteLine("Question 2");
             int[] ar2 = {0,1,0,3,12};
             MoveZeroes(ar2);
-            Console.WriteLine("");
+            Console.WriteLine();
 
             //Question3
             Console.WriteLine("Question 3");
@@ -117,7 +118,7 @@ namespace Assignment2_DIS_Spring2021
             {
                 for (int i = 0, j = n; i <= n-1 && j <= 2*n-1; i++, j++)
                 {
-                    Console.Write(nums[i]+","+nums[j]+",");
+                    Console.Write(nums[i]+" "+nums[j]+" ");
                 }
                 Console.WriteLine();
             }
